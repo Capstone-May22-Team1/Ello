@@ -1,7 +1,6 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchBoard } from "./boards";
 
-
 const initialState = [];
 
 export const fetchCards = createAsyncThunk("cards/fetchCards", async () => {
@@ -20,8 +19,6 @@ const cardSlice = createSlice({
         return acc.concat(cards);
       }, []);
       return cards
-
-
     })
   },
 });
