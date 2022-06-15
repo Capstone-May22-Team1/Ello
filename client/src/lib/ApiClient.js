@@ -31,6 +31,14 @@ const apiClient = {
       logError(e);
     }
   },
+  getBoard: async (id) => {
+    try {
+      const { data } = await axios.get(`${routes.BOARDS_INDEX_URL}/${id}`);
+      return data
+    } catch (e) {
+      logError(e)
+    }
+  }
 };
 
 export default apiClient;

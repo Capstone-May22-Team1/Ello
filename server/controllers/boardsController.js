@@ -1,4 +1,6 @@
 const Board = require("../models/board");
+const List = require("../models/list"); // required to import the Schemas for List and Card
+const Card = require("../models/card"); // required to import the Schemas for List and Card
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
 
@@ -38,10 +40,10 @@ const getBoard = (req, res, next) => {
   .then((board) => {
     res.json(board)
   }).catch((err) => {
+    console.log(err)
     next(new HttpError("Board does not exist", 404))
   })
 }
-
 
 exports.getBoard = getBoard;
 exports.getBoards = getBoards;
