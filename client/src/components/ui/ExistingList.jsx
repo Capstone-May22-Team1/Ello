@@ -1,9 +1,10 @@
-import React from "react"
-import { useSelector } from "react-redux"
+import React, { useState } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { useParams } from "react-router-dom"
+import { createList } from "../../features/boards/lists"
 
 const ExistingList = () => {
   const lists = useSelector((state => state.lists))
-  console.log(lists)
 
   return (
     <main>
@@ -21,10 +22,7 @@ const ExistingList = () => {
 
 const ListTile = ({ list }) => {
   const cards = useSelector((state => state.cards)).filter(card => card.listId === list._id)
-  // console.log(cards)
 
-  console.log('cards:', cards)
-  
   return (
     <div className="list-wrapper">
       <div className="list-background">
@@ -54,7 +52,6 @@ const ListTile = ({ list }) => {
 }
 
 const CardContainer = ({ card }) => {
-  console.log(Date(card.dueDate))
   return (
     <>
       <div className="card-background">
@@ -105,13 +102,41 @@ const AddCard = () => {
 }
 
 const AddAList = () => {
+  const dispatch = useDispatch()
+  const { id } = useParams()
+
+  const [ listTitle, setListTitle ] = useState('')
+  const [ displayListForm, setDisplayListForm ] = useState(false)
+  
+  const handleSubmitNewList = (e) => {
+    e.preventDefault()
+    const newList = {
+      boardId: id,
+      list: {
+        title: listTitle
+      }
+    }
+
+    dispatch(createList({ callback: resetForm, newList }))
+  }
+
+  const resetForm = () => {
+    setListTitle('')
+    setDisplayListForm(false)
+  }
+
   return (
-    <div id="new-list" className="new-list">
-      <span>Add a list...</span>
-      <input type="text" placeholder="Add a list..." />
+    <div id="new-list" className={`new-list ${displayListForm ? 'selected' : ''}`}>
+      <span onClick={() => setDisplayListForm(true)}>Add a list...</span>
+      <input 
+        type="text" 
+        placeholder="Add a list..." 
+        value={listTitle}
+        onChange={(e) => setListTitle(e.target.value)}
+      />
       <div>
-        <input type="submit" className="button" value="Save" />
-        <i className="x-icon icon"></i>
+        <input type="submit" className="button" value="Save" onClick={handleSubmitNewList}/>
+        <i onClick={() => setDisplayListForm(false)} className="x-icon icon"></i>
       </div>
     </div>
   )

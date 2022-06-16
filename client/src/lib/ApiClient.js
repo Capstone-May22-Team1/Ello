@@ -38,7 +38,19 @@ const apiClient = {
     } catch (e) {
       logError(e)
     }
+  },
+  createList: async (newList) => {
+    try {
+      console.log(newList)
+      const { data } = await axios.post(routes.CREATE_LIST_URL, newList)
+      return data
+    } catch (e) {
+      logError(e)
+    }
   }
+
+
+
 };
 
 export default apiClient;

@@ -7,15 +7,12 @@ const { listeners } = require("../models/board");
 
 const createList = (req, res, next) => {
   const errors = validationResult(req);
-  // console.log(errors)
-
   const newObj = {
     boardId: req.body.boardId,
     title: req.body.list.title
   }
 
   if (errors.isEmpty()) {
-    // console.log(req.body)
     List.create(newObj)
       .then((list) => {
         res.json({
@@ -29,9 +26,6 @@ const createList = (req, res, next) => {
         return list
       })
       .then((list) => {
-        // lists: [...lists, list]
-        // // Mongo $push operator
-        // { $push: { lists: list._id }}
         Board.findByIdAndUpdate(list.boardId, { $push: { lists: list._id }}, () => {})
       })
       .catch((err) => {
@@ -42,13 +36,6 @@ const createList = (req, res, next) => {
     return next(new HttpError("The input field is empty.", 404));
   }
 };
-
-/*
-{
-  "boardId": "62a8ccc07fa2f8e51b28dac0",
-  "title": "Test List"
-}
-*/
 
 /*
 const editList = (req, res, next) => {
