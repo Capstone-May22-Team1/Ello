@@ -1,19 +1,19 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import TopNav from "./shared/TopNav";
 import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
-import UISection from "./ui/UISection";
+import TopNav from "./shared/TopNav";
 import AllBoards from "./ui/AllBoards";
+import Board from "./ui/Board";
+import Card from "./ui/Card";
 import CardArchived from "./ui/CardArchived";
 import CardEditingDescription from "./ui/CardEditingDescription";
-import Card from "./ui/Card";
 import CopyCardPopover from "./ui/CopyCardPopover";
 import CreateBoard from "./ui/CreateBoard";
 import DueDatePopover from "./ui/DueDatePopover";
 import LabelsPopover from "./ui/LabelsPopover";
 import MoveCardPopover from "./ui/MoveCardPopover";
 import SingleBoard from "./ui/SingleBoard";
-import Board from "./ui/Board";
+import UISection from "./ui/UISection";
 
 
 const Application = () => {

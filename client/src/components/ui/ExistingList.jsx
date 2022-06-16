@@ -3,6 +3,7 @@ import { useSelector } from "react-redux"
 
 const ExistingList = () => {
   const lists = useSelector((state => state.lists))
+  console.log(lists)
 
   return (
     <main>
@@ -12,12 +13,18 @@ const ExistingList = () => {
             <ListTile key={list._id} list={list} />
           ))}
         </div>
+        <AddAList />
       </div>
     </main>
   )
 }
 
 const ListTile = ({ list }) => {
+  const cards = useSelector((state => state.cards)).filter(card => card.listId === list._id)
+  // console.log(cards)
+
+  console.log('cards:', cards)
+  
   return (
     <div className="list-wrapper">
       <div className="list-background">
@@ -34,92 +41,81 @@ const ListTile = ({ list }) => {
               <span>...</span>
             </div>
           </div>
-          <CardContainer />
-          {/* <AddCard /> */}
-
-
+            <div id="cards-container" data-id={`list-${list._id}-cards`}>
+              {cards.map(card => (
+                <CardContainer key={card._id} card={card}/>
+              ))}
+            </div>
+          <AddCard />
         </div>
       </div>
     </div>
   )
 }
 
-const CardContainer = () => {
+const CardContainer = ({ card }) => {
+  console.log(Date(card.dueDate))
   return (
-    <div id="cards-container" data-id="list-1-cards">
-    <div className="card-background">
-      <div className="card ">
-        <i className="edit-toggle edit-icon sm-icon"></i>
-        <div className="card-info">
-          <div className="card-label green colorblindable"></div>
-          <div className="card-label yellow colorblindable"></div>
-          <div className="card-label red colorblindable"></div>
-          <div className="card-label orange colorblindable"></div>
-          <div className="card-label blue colorblindable"></div>
-          <div className="card-label purple colorblindable"></div>
-          <p>
-            Cards do many cool things. Click on this card to
-            open it and learn more...
-          </p>
-        </div>
-        <div className="card-icons">
-          <i className="clock-icon sm-icon overdue-recent completed">
-            Aug 4
-          </i>
-          <i className="description-icon sm-icon"></i>
-          <i className="comment-icon sm-icon"></i>
+    <>
+      <div className="card-background">
+        <div className="card ">
+          <i className="edit-toggle edit-icon sm-icon"></i>
+          <div className="card-info">
+            {card.labels.map(label => (
+              <div key={label} className={`card-label ${label} colorblindable`}></div>
+            ))}
+            <p>
+              {card.title}
+            </p>
+          </div>
+          <div className="card-icons">
+            <i className="clock-icon sm-icon overdue-recent completed">
+              {card.dueDate}
+            </i>
+            <i className="description-icon sm-icon"></i>
+            <i className="comment-icon sm-icon"></i>
+          </div>
         </div>
       </div>
-    </div>
-    <div className="card-background">
-      <div className="card ">
-        <i className="edit-toggle edit-icon sm-icon"></i>
-        <div className="cover-image"></div>
-        <div className="card-info">
-          <p>Another list with stuff</p>
-        </div>
-        <div className="card-icons">
-          <i className="clock-icon sm-icon overdue ">Aug 3</i>
-          <i className="description-icon sm-icon"></i>
-        </div>
-      </div>
-    </div>
-    <div className="card-background">
-      <div className="card ">
-        <i className="edit-toggle edit-icon sm-icon"></i>
-        <div className="cover-image"></div>
-        <div className="card-info">
-          <p>
-            Use the + in the top menu to make your first board
-            now.
-          </p>
-        </div>
-        <div className="card-icons"></div>
-      </div>
-    </div>
-  </div>
+    </>
   )
 }
 
-// const AddCard = () => {
-//   return (
-//     <div className="add-dropdown add-bottom">
-//     <div className="card">
-//       <div className="card-info"></div>
-//       <textarea name="add-card"></textarea>
-//       <div className="members"></div>
-//     </div>
-//     <a className="button">Add</a>
-//     <i className="x-icon icon"></i>
-//     <div className="add-options">
-//       <span>...</span>
-//     </div>
-//   </div>
-//   <div className="add-card-toggle" data-position="bottom">
-//     Add a card...
-//   </div>
-//   )
-// }
+
+const AddCard = () => {
+  return (
+    <>
+      <div className="add-dropdown add-bottom">
+        <div className="card">
+          <div className="card-info"></div>
+            <textarea name="add-card"></textarea>
+              <div className="members"></div>
+        </div>
+        <a className="button">Add</a>
+        <i className="x-icon icon"></i>
+        <div className="add-options">
+          <span>...</span>
+        </div>
+      </div>
+      <div className="add-card-toggle" data-position="bottom">
+        Add a card...
+      </div>
+    </>
+  )
+}
+
+const AddAList = () => {
+  return (
+    <div id="new-list" className="new-list">
+      <span>Add a list...</span>
+      <input type="text" placeholder="Add a list..." />
+      <div>
+        <input type="submit" className="button" value="Save" />
+        <i className="x-icon icon"></i>
+      </div>
+    </div>
+  )
+}
 
 export default ExistingList
 /*
