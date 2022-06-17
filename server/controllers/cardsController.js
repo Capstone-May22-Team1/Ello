@@ -1,6 +1,5 @@
-const Board = require("../models/board");
-const List = require("../models/list"); // required to import the Schemas for List and Card
-const Card = require("../models/card"); // required to import the Schemas for List and Card
+const List = require("../models/list");
+const Card = require("../models/card");
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
 

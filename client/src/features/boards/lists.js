@@ -4,13 +4,6 @@ import { fetchBoard } from "./boards";
 
 const initialState = [];
 
-/*
-export const fetchBoards = createAsyncThunk("boards/fetchBoards", async () => {
-  const data = await apiClient.getBoards();
-  return data;
-});
-*/
-
 export const createList = createAsyncThunk(
   "lists/createList", 
   async ({ newList, callback }) => {
@@ -21,7 +14,6 @@ export const createList = createAsyncThunk(
     return data
   }
 )
-
 
 const listSlice = createSlice({
   name: "lists",
