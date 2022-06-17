@@ -1,0 +1,9 @@
+POST http://localhost:5001/api/cards/ HTTP/1.1
+content-type: application/json
+
+{
+    "listId": "62a8cef7198ef3b6dc069381",
+    "card": {
+      "title": "My New Card!"
+    }    
+}
