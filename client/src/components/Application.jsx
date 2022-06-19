@@ -1,9 +1,14 @@
 import React from "react";
 import { Route } from "react-router-dom";
-import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
+
 import TopNav from "./shared/TopNav";
-import AllBoards from "./ui/AllBoards";
+import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
 import Board from "./ui/Board";
+import CardView from "./ui/CardView";
+
+
+import AllBoards from "./ui/AllBoards";
+
 import Card from "./ui/Card";
 import CardArchived from "./ui/CardArchived";
 import CardEditingDescription from "./ui/CardEditingDescription";
@@ -22,6 +27,7 @@ const Application = () => {
       <TopNav />
       <Route path="/" exact component={BoardsDashboardContainer} />
       <Route path="/boards/:id" exact component={Board} />
+      <Route path="/cards/:id" exact component={CardView} />
 
       <Route path="/ui" exact component={UISection} />
       <Route path="/ui/allBoards" component={AllBoards} />

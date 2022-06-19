@@ -54,6 +54,14 @@ const apiClient = {
     } catch (e) {
       logError(e)
     }
+  },
+  getCard: async (cardId) => {
+    try {
+      const { data } = await axios.get(`${routes.CARDS_INDEX_URL}/${cardId}`)
+      return data
+    } catch (e) {
+      logError(e)
+    }
   }
 };
 

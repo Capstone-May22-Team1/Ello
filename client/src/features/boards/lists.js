@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import apiClient from "../../lib/ApiClient";
 import { fetchBoard } from "./boards";
+import apiClient from "../../lib/ApiClient";
 
 const initialState = [];
 

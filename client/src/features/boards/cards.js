@@ -4,8 +4,18 @@ import apiClient from "../../lib/ApiClient";
 
 const initialState = [];
 
-export const fetchCards = createAsyncThunk("cards/fetchCards", async () => {
-});
+export const fetchCard = createAsyncThunk(
+  "cards/fetchCard", 
+  async ({ id, callback}) => {
+    const data = await apiClient.getCard(id)
+    
+    if (callback) {
+      callback()
+    }
+
+    return data
+  }
+);
 
 export const createCard = createAsyncThunk(
   "cards/createCard", 
@@ -32,13 +42,12 @@ const cardSlice = createSlice({
       return cards
     }),
     builder.addCase(createCard.fulfilled, (state, action) => {
-      const card = action.payload
-      console.log(card)
-      return state.concat(card)
+      return state.concat(action.payload)
+    }),
+    builder.addCase(fetchCard.fulfilled, (state, action) => {
+      return [].concat(action.payload)
     })
   },
 });
-
-
 
 export default cardSlice.reducer;

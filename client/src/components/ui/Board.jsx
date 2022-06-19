@@ -10,6 +10,8 @@ const Board = () => {
   const boards = useSelector((state) => state.boards) // returns an Array of Boards
   const board = boards.find(b => b._id === id)        
 
+  console.log(boards)
+
   const generateBoardHeader = (board) 
     ? (<BoardHeader key={board._id} title={board.title} />)
     : ""

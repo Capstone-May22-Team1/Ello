@@ -1,110 +1,47 @@
-import React from "react";
+import React, { useEffect } from 'react'
+import { useDispatch, useSelector } from "react-redux"
+import { useParams } from "react-router-dom"
+import { fetchCard } from '../../features/boards/cards'
 
-// /card/id -> render the card, with the Board in the background
+const CardView = () => {
+  const dispatch = useDispatch()
+  const { id } = useParams()
+  const card = useSelector((state) => state.cards) // returns an Array of All Cards
 
-const Card = () => {
+  useEffect(() => {
+    dispatch(fetchCard({ id: id }))
+  }, [dispatch, id])
+  
+
+  const generateCardView = (card.length === 1) 
+    ? (<Card card={card[0]} />)
+    : ""
+
   return (
+    <>
+      {generateCardView}
+    </>
+  )
+}
+
+const Card = ({ card }) => {
+  return (
+    <>
     <div id="modal-container">
       <div className="screen"></div>
       <div id="modal">
         <i className="x-icon icon close-modal"></i>
-        <header>
-          <i className="card-icon icon .close-modal"></i>
-          <textarea className="list-title" style={{ height: "45px" }}>
-            Cards do many cool things. Click on this card to open it and learn
-            more...
-          </textarea>
-          <p>
-            in list <a className="link">Stuff to try (this is a list)</a>
-            <i className="sub-icon sm-icon"></i>
-          </p>
-        </header>
+        <CardHeader />
         <section className="modal-main">
           <ul className="modal-outer-list">
             <li className="details-section">
               <ul className="modal-details-list">
-                <li className="labels-section">
-                  <h3>Labels</h3>
-                  <div className="member-container">
-                    <div className="green label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="yellow label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="orange label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="blue label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="purple label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <div className="red label colorblindable"></div>
-                  </div>
-                  <div className="member-container">
-                    <i className="plus-icon sm-icon"></i>
-                  </div>
-                </li>
-                <li className="due-date-section">
-                  <h3>Due Date</h3>
-                  <div id="dueDateDisplay" className="overdue completed">
-                    <input
-                      id="dueDateCheckbox"
-                      type="checkbox"
-                      className="checkbox"
-                      checked=""
-                    />
-                    Aug 4 at 10:42 AM <span>(past due)</span>
-                  </div>
-                </li>
+                <CardLabels />
+                <CardDueDate />
               </ul>
-              <form className="description">
-                <p>Description</p>
-                <span id="description-edit" className="link">
-                  Edit
-                </span>
-                <p className="textarea-overlay">
-                  Cards have a symbol to indicate if they contain a description.
-                </p>
-                <p id="description-edit-options" className="hidden">
-                  You have unsaved edits on this field.{" "}
-                  <span className="link">View edits</span> -{" "}
-                  <span className="link">Discard</span>
-                </p>
-              </form>
+              <CardDescriptionForm />
             </li>
-            <li className="comment-section">
-              <h2 className="comment-icon icon">Add Comment</h2>
-              <div>
-                <div className="member-container">
-                  <div className="card-member">TP</div>
-                </div>
-                <div className="comment">
-                  <label>
-                    <textarea
-                      required=""
-                      rows="1"
-                      placeholder="Write a comment..."
-                    ></textarea>
-                    <div>
-                      <a className="light-button card-icon sm-icon"></a>
-                      <a className="light-button smiley-icon sm-icon"></a>
-                      <a className="light-button email-icon sm-icon"></a>
-                      <a className="light-button attachment-icon sm-icon"></a>
-                    </div>
-                    <div>
-                      <input
-                        type="submit"
-                        className="button not-implemented"
-                        value="Save"
-                      />
-                    </div>
-                  </label>
-                </div>
-              </div>
-            </li>
+            <CommentSection />
             <li className="activity-section">
               <h2 className="activity-icon icon">Activity</h2>
               <ul className="horiz-list">
@@ -234,7 +171,124 @@ const Card = () => {
         </aside>
       </div>
     </div>
-  );
-};
+  </>
+  )
+}
 
-export default Card;
+const CardHeader = () => {
+  return (
+    <header>
+      <i className="card-icon icon .close-modal"></i>
+      <textarea className="list-title" style={{ height: "45px" }}>
+        Cards do many cool things. Click on this card to open it and learn
+        more...
+      </textarea>
+      <p>
+        in list <a className="link">Stuff to try (this is a list)</a>
+        <i className="sub-icon sm-icon"></i>
+      </p>
+    </header>
+  )
+}
+
+const CardLabels = () => {
+  return (    
+    <li className="labels-section">
+      <h3>Labels</h3>
+      <div className="member-container">
+        <div className="green label colorblindable"></div>
+      </div>
+      <div className="member-container">
+        <div className="yellow label colorblindable"></div>
+      </div>
+      <div className="member-container">
+        <div className="orange label colorblindable"></div>
+      </div>
+      <div className="member-container">
+        <div className="blue label colorblindable"></div>
+      </div>
+      <div className="member-container">
+        <div className="purple label colorblindable"></div>
+      </div>
+      <div className="member-container">
+        <div className="red label colorblindable"></div>
+      </div>
+      <div className="member-container">
+        <i className="plus-icon sm-icon"></i>
+      </div>
+    </li>
+  )
+}
+
+const CardDueDate = () => {
+  return (
+    <li className="due-date-section">
+      <h3>Due Date</h3>
+      <div id="dueDateDisplay" className="overdue completed">
+        <input
+          id="dueDateCheckbox"
+          type="checkbox"
+          className="checkbox"
+          checked=""
+        />
+        Aug 4 at 10:42 AM <span>(past due)</span>
+      </div>
+    </li>
+  )
+}
+
+const CardDescriptionForm = () => {
+  return (
+    <form className="description">
+      <p>Description</p>
+      <span id="description-edit" className="link">
+        Edit
+      </span>
+      <p className="textarea-overlay">
+        Cards have a symbol to indicate if they contain a description.
+      </p>
+      <p id="description-edit-options" className="hidden">
+        You have unsaved edits on this field.{" "}
+        <span className="link">View edits</span> -{" "}
+        <span className="link">Discard</span>
+      </p>
+    </form>
+  )
+}
+
+const CommentSection = () => {
+  return (
+    <li className="comment-section">
+      <h2 className="comment-icon icon">Add Comment</h2>
+      <div>
+        <div className="member-container">
+          <div className="card-member">TP</div>
+        </div>
+        <div className="comment">
+          <label>
+            <textarea
+              required=""
+              rows="1"
+              placeholder="Write a comment..."
+            ></textarea>
+            <div>
+              <a className="light-button card-icon sm-icon"></a>
+              <a className="light-button smiley-icon sm-icon"></a>
+              <a className="light-button email-icon sm-icon"></a>
+              <a className="light-button attachment-icon sm-icon"></a>
+            </div>
+            <div>
+              <input
+                type="submit"
+                className="button not-implemented"
+                value="Save"
+              />
+            </div>
+          </label>
+        </div>
+      </div>
+    </li>
+  )
+}
+
+export default CardView

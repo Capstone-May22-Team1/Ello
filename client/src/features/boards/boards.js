@@ -46,7 +46,6 @@ const boardSlice = createSlice({
       state.push(action.payload);
     }),
     builder.addCase(fetchBoard.fulfilled, (state, action) => {
-      // console.log(action.payload)
       if (state.length === 0) {
         const { lists, ...boardWithoutLists } = action.payload
         return [ boardWithoutLists ]
