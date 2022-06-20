@@ -47,6 +47,14 @@ const apiClient = {
       logError(e)
     }
   },
+  updateList: async (updatedList, listId) => {
+    try {
+      const { data } = await axios.put(`${routes.EDIT_LIST_URL}/${listId}`, updatedList)
+      return data
+    } catch (e) {
+      logError(e)
+    }
+  },
   createCard: async (newCard) => {
     try {
       const { data } = await axios.post(routes.CREATE_CARD_URL, newCard)
@@ -62,7 +70,7 @@ const apiClient = {
     } catch (e) {
       logError(e)
     }
-  }
+  },
 };
 
 export default apiClient;

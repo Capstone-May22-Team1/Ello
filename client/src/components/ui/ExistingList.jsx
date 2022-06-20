@@ -1,7 +1,7 @@
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
-import { createList } from "../../features/boards/lists"
+import { createList, updateList } from "../../features/boards/lists"
 import { createCard } from "../../features/boards/cards"
 import { Link } from "react-router-dom";
 
@@ -28,8 +28,34 @@ const ExistingList = () => {
 }
 
 const ListTile = ({ list, listId }) => {
+  const dispatch = useDispatch()
   const cards = useSelector((state => state.cards)).filter(card => card.listId === list._id)
   const [ displayAddCardForm, setDisplayAddCardForm ] = useState(false)
+
+  const [ displayEditListInput, setDisplayEditListInput ] = useState(false)
+  const [ editListInput, setEditListInput ] = useState(list.title)
+
+  const handleKeyPress = (e) => {
+    if (e.key === 'Enter') {
+      handleUpdateList()
+    }
+  }
+
+  const handleBlur = () => {
+   handleUpdateList()
+  }
+
+  const handleUpdateList = () => {
+    dispatch(updateList({
+      updatedList: {title: editListInput}, 
+      listId, 
+      callback: resetForm
+    }))
+  }
+
+  const resetForm = () => {
+    setDisplayEditListInput(false)
+  }
 
   return (
     <div className={`list-wrapper ${displayAddCardForm ? 'add-dropdown-active' : ''}`}>
@@ -37,7 +63,17 @@ const ListTile = ({ list, listId }) => {
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
           <div>
-            <p className="list-title">{list.title}</p>
+            {(displayEditListInput
+              ? <input
+                  type="text" 
+                  className="list-title"
+                  value={editListInput}
+                  onChange={(e) => setEditListInput(e.target.value)}
+                  onKeyPress={handleKeyPress}
+                  autoFocus
+                  onBlur={handleBlur}
+                />
+              : <p className="list-title" onClick={() => setDisplayEditListInput(true)}>{list.title}</p>)}
           </div>
           <div className="add-dropdown add-top">
             <div className="card"></div>
