@@ -10,6 +10,7 @@ router.get('/boards/:id', boardsController.getBoard);
 router.post('/boards', validateBoard, boardsController.createBoard );
 
 router.post('/lists', validateList, listsController.createList );
+router.put('/lists/:id', listsController.updateList)
 
 router.get('/cards/:id', cardsController.getCard);
 router.post('/cards', validateCard, cardsController.createCard );

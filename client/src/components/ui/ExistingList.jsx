@@ -1,4 +1,3 @@
-
 import React, { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
 import { useParams } from "react-router-dom"
@@ -7,8 +6,13 @@ import { createCard } from "../../features/boards/cards"
 import { Link } from "react-router-dom";
 
 const ExistingList = () => {
-  const lists = useSelector((state => state.lists))
+  const lists = useSelector((state => state.lists)) // not consistent, these are lists only from the board
 
+  // State of Active Lists -> an Id -> only one list can display 'add a card'
+  // Modify the state of Active List
+  // Only Show the Form if the List is Active
+  // Reset the List Form, or Keep the User Input
+  // onMouseDown -> onBlur -> precedence over onClick?
   return (
     <main>
       <div id="list-container" className="list-container">

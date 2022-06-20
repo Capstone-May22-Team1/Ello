@@ -35,4 +35,21 @@ const createList = (req, res, next) => {
   }
 };
 
+const updateList = (req, res, next) => {
+  const listId = req.params.id
+  console.log(listId)
+  const updatedList = req.body
+
+  List.findByIdAndUpdate(listId, { title: updatedList.title }, {new: true})
+    .then((returnedList) => {
+      console.log(returnedList)
+      res.json(returnedList)
+    })
+    .catch((err) => {
+      console.log(err)
+      return next(new HttpError("Updating list failed, please try again", 500))
+    })
+}
+
 exports.createList = createList;
+exports.updateList = updateList;

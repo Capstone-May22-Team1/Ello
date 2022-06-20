@@ -17,14 +17,12 @@ const getCard = (req, res, next) => {
 const createCard = (req, res, next) => {
   const errors = validationResult(req)
   if (errors.isEmpty()) {
-    console.log('we are here')
     const newCard = {
       listId: req.body.listId,
       title: req.body.card.title
     }
     Card.create(newCard)
       .then((card) => {
-        console.log('in the then')
         res.json(card)
         return card
       })
