@@ -18,6 +18,7 @@ const createCard = (req, res, next) => {
   const errors = validationResult(req)
   if (errors.isEmpty()) {
     const newCard = {
+      boardId: req.body.boardId,
       listId: req.body.listId,
       title: req.body.card.title
     }

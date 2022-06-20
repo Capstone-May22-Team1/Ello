@@ -41,6 +41,7 @@ const CardSchema = new Schema({
   },
   boardId: {
     type: Schema.Types.ObjectId,
+    required: [true, 'The Board Id is required']
   },
   comments: [
     {

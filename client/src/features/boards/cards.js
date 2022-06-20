@@ -8,6 +8,7 @@ export const fetchCard = createAsyncThunk(
   "cards/fetchCard", 
   async ({ id, callback}) => {
     const data = await apiClient.getCard(id)
+    console.log(data)
     
     if (callback) {
       callback()

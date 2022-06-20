@@ -13,7 +13,7 @@ const ExistingList = () => {
       <div id="list-container" className="list-container">
         <div id="existing-lists" className="existing-lists">
           {lists.map(list => (
-            <ListTile key={list._id} list={list} listId={list._id}/>
+            <ListTile key={list._id} list={list} listId={list._id} boardId={id}/>
           ))}
         </div>
         <AddList />

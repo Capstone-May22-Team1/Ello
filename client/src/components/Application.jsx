@@ -5,7 +5,7 @@ import TopNav from "./shared/TopNav";
 import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
 import Board from "./board/Board";
 
-import CardView from "./ui/CardView";
+import CardView from "./card/CardView";
 
 import AllBoards from "./ui/AllBoards";
 
@@ -26,8 +26,8 @@ const Application = () => {
     <div>
       <TopNav />
       <Route path="/" exact component={BoardsDashboardContainer} />
-      <Route path="/boards/:id" exact component={Board} />
-      <Route path="/cards/:id" exact component={CardView} />
+      <Route path="/cards/:cardId" exact component={CardView} />
+      <Route path="/(boards|cards)/:id" exact component={Board} />
 
       <Route path="/ui" exact component={UISection} />
       <Route path="/ui/allBoards" component={AllBoards} />
@@ -48,3 +48,4 @@ const Application = () => {
 };
 
 export default Application;
+// <Route path="/(boards|cards)/:id" exact component={Board} />

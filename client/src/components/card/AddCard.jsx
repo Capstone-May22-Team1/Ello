@@ -3,12 +3,13 @@ import { useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { createCard } from '../../features/boards/cards'
 
-const AddCard = ({ displayAddCardForm, setDisplayAddCardForm, listId }) => {
+const AddCard = ({ displayAddCardForm, setDisplayAddCardForm, listId, boardId }) => {
   const dispatch = useDispatch()
   const [ cardText, setCardText ] = useState('')
 
   const handleCreateCard = () => {
     const newCard = {
+      boardId,
       listId,
       card: {
         title: cardText,

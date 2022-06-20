@@ -5,16 +5,19 @@ import { fetchCard } from '../../features/boards/cards'
 
 const CardView = () => {
   const dispatch = useDispatch()
-  const { id } = useParams()
-  const card = useSelector((state) => state.cards) // returns an Array of All Cards
+  const { cardId } = useParams()
+  const card = useSelector((state) => state.cards).find(card => card._id === cardId) 
+  const list = useSelector((state) => state.lists).find(list => card.listId === list._id)
+
+  console.log(card)
 
   useEffect(() => {
-    dispatch(fetchCard({ id: id }))
-  }, [dispatch, id])
+    dispatch(fetchCard({ id: cardId }))
+  }, [dispatch, cardId])
   
 
-  const generateCardView = (card.length === 1) 
-    ? (<Card card={card[0]} />)
+  const generateCardView = ( card && list )
+    ? (<Card card={card} list={list} />)
     : ""
 
   return (
@@ -24,19 +27,19 @@ const CardView = () => {
   )
 }
 
-const Card = ({ card }) => {
+const Card = ({ card, list }) => {
   return (
     <>
     <div id="modal-container">
       <div className="screen"></div>
       <div id="modal">
         <i className="x-icon icon close-modal"></i>
-        <CardHeader />
+        <CardHeader card={card} list={list}/>
         <section className="modal-main">
           <ul className="modal-outer-list">
             <li className="details-section">
               <ul className="modal-details-list">
-                <CardLabels />
+                <CardLabels card={card} list={list}/>
                 <CardDueDate />
               </ul>
               <CardDescriptionForm />
@@ -175,27 +178,33 @@ const Card = ({ card }) => {
   )
 }
 
-const CardHeader = () => {
+const CardHeader = ({ card, list }) => {
+  console.log(card)
+  console.log('list in component', list)
   return (
     <header>
       <i className="card-icon icon .close-modal"></i>
       <textarea className="list-title" style={{ height: "45px" }}>
-        Cards do many cool things. Click on this card to open it and learn
-        more...
+        {card.title}
       </textarea>
       <p>
-        in list <a className="link">Stuff to try (this is a list)</a>
+        in list <a className="link">{list.title}</a>
         <i className="sub-icon sm-icon"></i>
       </p>
     </header>
   )
 }
 
-const CardLabels = () => {
+const CardLabels = ({ card }) => {
   return (    
     <li className="labels-section">
       <h3>Labels</h3>
-      <div className="member-container">
+      {card.labels.map(label => (
+        <div className="member-container" key={`container ${label}`}>
+          <div key={label} className={`${label} label colorblindable`}></div>
+        </div> 
+      ))}
+      {/* <div className="member-container">
         <div className="green label colorblindable"></div>
       </div>
       <div className="member-container">
@@ -212,7 +221,7 @@ const CardLabels = () => {
       </div>
       <div className="member-container">
         <div className="red label colorblindable"></div>
-      </div>
+      </div> */}
       <div className="member-container">
         <i className="plus-icon sm-icon"></i>
       </div>

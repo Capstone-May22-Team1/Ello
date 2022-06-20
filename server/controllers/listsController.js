@@ -3,6 +3,17 @@ const List = require("../models/list");
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
 
+const getList = (req, res, next) => {
+  const id = req.params.id
+  List.findById(id)
+    .then((list) => {
+      res.json(list)
+    }).catch((err) => {
+      console.log(err)
+      next(new HttpError("Board does not exist", 404))
+    })
+}
+
 const createList = (req, res, next) => {
   const errors = validationResult(req);
   const newObj = {
@@ -51,3 +62,4 @@ const updateList = (req, res, next) => {
 
 exports.createList = createList;
 exports.updateList = updateList;
+exports.getList = getList;

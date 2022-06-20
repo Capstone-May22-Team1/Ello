@@ -4,7 +4,7 @@ import { updateList } from "../../features/boards/lists"
 import CardContainer from "../card/CardContainer"
 import AddCard from "../card/AddCard"
 
-const ListTile = ({ list, listId }) => {
+const ListTile = ({ list, listId, boardId }) => {
   const dispatch = useDispatch()
   const cards = useSelector((state => state.cards)).filter(card => card.listId === list._id)
   const [ displayAddCardForm, setDisplayAddCardForm ] = useState(false)
@@ -70,6 +70,7 @@ const ListTile = ({ list, listId }) => {
             </div>
           <AddCard 
             listId={listId}
+            boardId={boardId}
             displayAddCardForm={displayAddCardForm}
             setDisplayAddCardForm={setDisplayAddCardForm}
           />

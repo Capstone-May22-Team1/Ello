@@ -1,6 +1,7 @@
 const Board = require("../models/board");
 const HttpError = require("../models/httpError");
 const { validationResult } = require("express-validator");
+const mongoose = require("mongoose")
 
 const getBoards = (req, res, next) => {
   Board.find({}, "title _id createdAt updatedAt").then((boards) => {
@@ -30,15 +31,17 @@ const createBoard = (req, res, next) => {
 
 const getBoard = (req, res, next) => {
   const id = req.params.id
-  Board.findById(id)
+  Board.findOne({'_id': id})
     .populate({
       path: 'lists',
       populate: { path: 'cards' }
     })
     .then((board) => {
+      if (board.length === 0) {
+        next(new HttpError("Board does not exist", 404))
+      }
       res.json(board)
     }).catch((err) => {
-      console.log(err)
       next(new HttpError("Board does not exist", 404))
     })
 }
