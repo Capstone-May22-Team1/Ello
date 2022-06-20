@@ -3,9 +3,9 @@ import { Route } from "react-router-dom";
 
 import TopNav from "./shared/TopNav";
 import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
-import Board from "./ui/Board";
-import CardView from "./ui/CardView";
+import Board from "./board/Board";
 
+import CardView from "./ui/CardView";
 
 import AllBoards from "./ui/AllBoards";
 
