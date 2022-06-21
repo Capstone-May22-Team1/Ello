@@ -7,6 +7,7 @@ const getCard = (req, res, next) => {
   const id = req.params.id
   console.log(id)
   Card.findById(id)
+    .populate('comments')
     .then((card) => {
       res.json(card)
     }).catch((err) => {

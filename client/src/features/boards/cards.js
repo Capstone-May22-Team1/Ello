@@ -7,9 +7,8 @@ const initialState = [];
 
 export const fetchCard = createAsyncThunk(
   "cards/fetchCard", 
-  async ({ id, callback}, thunkAPI) => {
+  async ({ id, callback}) => {
     const data = await apiClient.getCard(id)
-    thunkAPI.dispatch(fetchBoard(data.boardId))
 
     if (callback) {
       callback()
@@ -36,18 +35,35 @@ const cardSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchBoard.fulfilled, (state, action) => {
-      let cards = action.payload.lists.reduce((acc, comm) => {
+      // console.log(action.payload)
+      // console.log(action.payload.lists)
+
+      let arrayCards = action.payload.lists.reduce((acc, comm) => {
         //eslint-disable-next-line
-        const { cards, ...listWithoutCards } = comm; 
+        const { cards, ...listWithoutCards } = comm;
+
         return acc.concat(cards);
       }, []);
-      return cards
+
+      let correctCards = arrayCards.map(card => {
+        if (state.length === 1 && card._id === state[0]._id) {
+          return state[0]
+        } else {
+          return card
+        }
+      })
+
+      return correctCards
     }),
     builder.addCase(createCard.fulfilled, (state, action) => {
       return state.concat(action.payload)
     }),
     builder.addCase(fetchCard.fulfilled, (state, action) => {
-      return [].concat(action.payload)
+      if (state.length === 0) {
+        return [].concat(action.payload)
+      } else {
+        return state.map(card => card._id === action.payload._id ? action.payload : card)
+      }
     })
   },
 });
