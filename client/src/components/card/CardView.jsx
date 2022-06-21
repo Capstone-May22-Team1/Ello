@@ -9,8 +9,6 @@ const CardView = () => {
   const card = useSelector((state) => state.cards).find(card => card._id === cardId) 
   const list = useSelector((state) => state.lists).find(list => card.listId === list._id)
 
-  console.log(card)
-
   useEffect(() => {
     dispatch(fetchCard({ id: cardId }))
   }, [dispatch, cardId])
@@ -179,8 +177,6 @@ const Card = ({ card, list }) => {
 }
 
 const CardHeader = ({ card, list }) => {
-  console.log(card)
-  console.log('list in component', list)
   return (
     <header>
       <i className="card-icon icon .close-modal"></i>
@@ -253,7 +249,7 @@ const CardDescriptionForm = () => {
       <span id="description-edit" className="link">
         Edit
       </span>
-      <p className="textarea-overlay">
+      <p className="textarea-overlay" >
         Cards have a symbol to indicate if they contain a description.
       </p>
       <p id="description-edit-options" className="hidden">

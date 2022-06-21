@@ -2,14 +2,15 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { fetchBoard } from "./boards";
 import apiClient from "../../lib/ApiClient";
 
+
 const initialState = [];
 
 export const fetchCard = createAsyncThunk(
   "cards/fetchCard", 
-  async ({ id, callback}) => {
+  async ({ id, callback}, thunkAPI) => {
     const data = await apiClient.getCard(id)
-    console.log(data)
-    
+    thunkAPI.dispatch(fetchBoard(data.boardId))
+
     if (callback) {
       callback()
     }

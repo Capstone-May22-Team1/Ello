@@ -5,6 +5,7 @@ const { validationResult } = require("express-validator");
 
 const getCard = (req, res, next) => {
   const id = req.params.id
+  console.log(id)
   Card.findById(id)
     .then((card) => {
       res.json(card)
