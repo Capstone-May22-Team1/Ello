@@ -3,12 +3,17 @@ import CardHeader from "./CardHeader";
 import CardLabels from "./CardLabels";
 import CardDueDate from "./CardDueDate";
 import CardDescriptionForm from "./CardDescriptionForm"
+import CardDescription from "./CardDescription";
 import CommentSection from "./CommentSection";
 import ActivitySection from './ActivitySection'
 import SidebarButtons from './SideBarButtons'
 import { Link } from "react-router-dom";
+import { useState } from "react";
 
 const Card = ({ card, list }) => {
+
+  const [ displayDescriptionEditForm, setDisplayDescriptionEditForm ] = useState(false)
+
   return (
     <>
     <div id="modal-container">
@@ -25,7 +30,23 @@ const Card = ({ card, list }) => {
                 <CardLabels card={card} list={list}/>
                 <CardDueDate />
               </ul>
-              <CardDescriptionForm />
+              { displayDescriptionEditForm 
+                ? 
+                <>
+                  <CardDescriptionForm 
+                    card={card}
+                    displayForm={displayDescriptionEditForm}
+                    setDisplayForm={setDisplayDescriptionEditForm}
+                  />
+                </> 
+                :
+                <>
+                  <CardDescription 
+                    card={card}
+                    displayForm={displayDescriptionEditForm}
+                    setDisplayForm={setDisplayDescriptionEditForm}
+                  />
+                </>}
             </li>
             <CommentSection card={card}/>
             <ActivitySection />

@@ -68,8 +68,6 @@ const cardSlice = createSlice({
     }),
     builder.addCase(updateCard.fulfilled, (state, action) => {
       const { comments, ...cardWithoutComments } = action.payload
-      console.log('within the reducer')
-      console.log(cardWithoutComments)
       return state.map(card => card._id === action.payload._id ? cardWithoutComments : card)
     })
   },
