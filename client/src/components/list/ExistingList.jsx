@@ -1,12 +1,9 @@
 import React from "react"
 import { useSelector } from "react-redux"
-import { useParams } from "react-router-dom"
 import ListTile from "./ListTile"
 import AddList from "./AddList"
 
 const ExistingList = ({ id }) => {
-  // const { id } = useParams()
-  console.log('id in list', id)
   const lists = useSelector((state => state.lists)).filter(list => list.boardId === id)
 
   return (

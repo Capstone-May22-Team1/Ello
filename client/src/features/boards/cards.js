@@ -29,6 +29,18 @@ export const createCard = createAsyncThunk(
   }
 )
 
+export const updateCard = createAsyncThunk(
+  "cards/updateCard", 
+  async ({ cardId, updatedCard, callback }) => {
+    const data = await apiClient.editCard(cardId, updatedCard)
+
+    if (callback) {
+      callback()
+    }
+    return data
+  }
+)
+
 const cardSlice = createSlice({
   name: "cards",
   initialState,
@@ -53,6 +65,12 @@ const cardSlice = createSlice({
       } else {
         return state.map(card => card._id === action.payload._id ? cardWithoutComments : card)
       }
+    }),
+    builder.addCase(updateCard.fulfilled, (state, action) => {
+      const { comments, ...cardWithoutComments } = action.payload
+      console.log('within the reducer')
+      console.log(cardWithoutComments)
+      return state.map(card => card._id === action.payload._id ? cardWithoutComments : card)
     })
   },
 });

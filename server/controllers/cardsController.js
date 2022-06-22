@@ -41,29 +41,6 @@ const createCard = (req, res, next) => {
   }
 }
 
-/*
-const updateList = (req, res, next) => {
-  const listId = req.params.id
-  const updatedList = req.body
-
-  List.findByIdAndUpdate(listId, { title: updatedList.title }, {new: true})
-    .then((returnedList) => {
-      res.json(returnedList)
-    })
-    .catch((err) => {
-      console.log(err)
-      return next(new HttpError("Updating list failed, please try again", 500))
-    })
-}
-
-{
-  "card": {
-    "title": "My updated title",
-    "completed": true
-  }
-}
-*/
-
 const updateCard = (req, res, next) => {
   const errors = validationResult(req)
 
