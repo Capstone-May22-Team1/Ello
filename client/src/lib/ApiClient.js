@@ -71,6 +71,14 @@ const apiClient = {
       logError(e)
     }
   },
+  createComment: async (newComment) => {
+    try {
+      const { data } = await axios.post(`${routes.CREATE_COMMENT_URL}/`, newComment)
+      return data
+    } catch (e) {
+      logError(e)
+    }
+  },
 };
 
 export default apiClient;

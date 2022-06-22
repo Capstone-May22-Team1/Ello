@@ -35,34 +35,23 @@ const cardSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder.addCase(fetchBoard.fulfilled, (state, action) => {
-      // console.log(action.payload)
-      // console.log(action.payload.lists)
-
-      let arrayCards = action.payload.lists.reduce((acc, comm) => {
+      return action.payload.lists.reduce((acc, comm) => {
         //eslint-disable-next-line
         const { cards, ...listWithoutCards } = comm;
 
         return acc.concat(cards);
       }, []);
-
-      let correctCards = arrayCards.map(card => {
-        if (state.length === 1 && card._id === state[0]._id) {
-          return state[0]
-        } else {
-          return card
-        }
-      })
-
-      return correctCards
     }),
     builder.addCase(createCard.fulfilled, (state, action) => {
       return state.concat(action.payload)
     }),
     builder.addCase(fetchCard.fulfilled, (state, action) => {
+      const { comments, ...cardWithoutComments } = action.payload
+
       if (state.length === 0) {
-        return [].concat(action.payload)
+        return [].concat(cardWithoutComments)
       } else {
-        return state.map(card => card._id === action.payload._id ? action.payload : card)
+        return state.map(card => card._id === action.payload._id ? cardWithoutComments : card)
       }
     })
   },

@@ -25,7 +25,7 @@ const Card = ({ card, list }) => {
               </ul>
               <CardDescriptionForm />
             </li>
-            <CommentSection />
+            <CommentSection card={card}/>
             <ActivitySection />
           </ul>
         </section>
