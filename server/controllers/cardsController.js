@@ -41,5 +41,50 @@ const createCard = (req, res, next) => {
   }
 }
 
+/*
+const updateList = (req, res, next) => {
+  const listId = req.params.id
+  const updatedList = req.body
+
+  List.findByIdAndUpdate(listId, { title: updatedList.title }, {new: true})
+    .then((returnedList) => {
+      res.json(returnedList)
+    })
+    .catch((err) => {
+      console.log(err)
+      return next(new HttpError("Updating list failed, please try again", 500))
+    })
+}
+
+{
+  "card": {
+    "title": "My updated title",
+    "completed": true
+  }
+}
+*/
+
+const updateCard = (req, res, next) => {
+  const errors = validationResult(req)
+
+  if (errors.isEmpty()) {
+    const updatedCard = req.body.card
+    const cardId = req.params.id
+
+    Card.findByIdAndUpdate(cardId, updatedCard, {new: true})
+      .then((returnedCard) => {
+        res.json(returnedCard)
+      })
+      .catch((err) => {
+        console.log(err)
+        return next(new HttpError("Updating card failed, please try again", 500))
+      })
+    
+  } else {
+    return next(new HttpError("The input field is empty.", 404));
+  }
+}
+
 exports.getCard = getCard;
 exports.createCard = createCard;
+exports.updateCard = updateCard;

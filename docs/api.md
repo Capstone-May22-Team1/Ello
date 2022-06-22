@@ -379,6 +379,10 @@ At least one attribute must be included in a `"card"`object in the payload. The 
 - `completed`
 - `labels`
 
+How do we validate this? In the Validator?
+Iterate through the properties of the Object in the 'card' key
+  
+
 #### 1.10.1.1. Example Payload
 
 ```json
