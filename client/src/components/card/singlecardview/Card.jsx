@@ -6,6 +6,7 @@ import CardDescriptionForm from "./CardDescriptionForm"
 import CommentSection from "./CommentSection";
 import ActivitySection from './ActivitySection'
 import SidebarButtons from './SideBarButtons'
+import { Link } from "react-router-dom";
 
 const Card = ({ card, list }) => {
   return (
@@ -13,8 +14,9 @@ const Card = ({ card, list }) => {
     <div id="modal-container">
       <div className="screen"></div>
       <div id="modal">
-        {/* Add functionalty for closing card on x-icon */}
-        <i className="x-icon icon close-modal"></i>
+        <Link to={`/boards/${card.boardId}`}>
+          <i className="x-icon icon close-modal"></i>
+        </Link>
         <CardHeader card={card} list={list}/>
         <section className="modal-main">
           <ul className="modal-outer-list">

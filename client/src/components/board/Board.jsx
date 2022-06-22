@@ -24,27 +24,6 @@ const Board = () => {
     }
   }
 
-  // cards[]
-  
-
-  // if (card) {
-  //   id = card.boardId
-  // }
-
-  // in card modal you fetch the card in the useEffect
-
-  // in this component
-      // let boardId;
-
-      //     if (path === 'boards') {
-      //boardId = id;
-   //  } else if (path === 'cards') {
-     //  if (card) {
-      //const card = cards.find(c => c._id === id)
-     // if (card) boardId = card.boardId
-    //  }
-  //  }
-
   const boards = useSelector((state) => state.boards)
   const board = boards.find(b => b._id === boardId)  
 

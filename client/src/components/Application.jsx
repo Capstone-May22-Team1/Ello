@@ -5,7 +5,8 @@ import TopNav from "./shared/TopNav";
 import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
 import Board from "./board/Board";
 
-import CardView from "./card/CardView";
+// import Card from "./card/singleCardView/Card";
+import CardView from "./card/singlecardview/CardView";
 
 import AllBoards from "./ui/AllBoards";
 

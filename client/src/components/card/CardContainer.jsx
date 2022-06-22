@@ -5,6 +5,14 @@ import { Link } from "react-router-dom"
 // Added to Card Route to the Router
 // Need to Build Back Functionality to go back to the Board View
 const CardContainer = ({ card }) => {
+
+  const dateToString = (inputdate) => {
+    let date = new Date(inputdate)
+    let month = date.toLocaleString('en-us', { month: 'short' });
+    let day = date.getDate()
+    return `${month} ${day}`
+  }
+
   return (
     <>
       <div className="card-background">
@@ -20,9 +28,11 @@ const CardContainer = ({ card }) => {
               </p>
             </div>
             <div className="card-icons">
-              <i className="clock-icon sm-icon overdue-recent completed">
-                {card.dueDate}
-              </i>
+              {(card.dueDate)
+              ? (<i className="clock-icon sm-icon overdue-recent completed">
+                  {dateToString(card.dueDate)}
+                </i>)
+              : ""}
               <i className="description-icon sm-icon"></i>
               <i className="comment-icon sm-icon"></i>
             </div>

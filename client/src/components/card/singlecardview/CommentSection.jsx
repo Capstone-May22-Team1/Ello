@@ -1,7 +1,7 @@
 import React from 'react'
 import { useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { createComment } from '../../features/boards/comments'
+import { createComment } from '../../../features/boards/comments'
 
 const CommentSection = ({ card }) => {
   const dispatch = useDispatch()

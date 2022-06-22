@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { useSelector, useDispatch } from "react-redux"
 import { useParams } from "react-router-dom"
-import { fetchCard } from '../../features/boards/cards';
+import { fetchCard } from '../../../features/boards/cards';
 import Card from "./Card"
 
 
