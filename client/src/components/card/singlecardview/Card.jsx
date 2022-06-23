@@ -12,11 +12,14 @@ import { useState } from "react";
 
 import Popover from "../../shared/Popover";
 import LabelsPopover from "./LabelsPopover";
+import DueDatePopover from "./DueDatePopover";
+
 
 const Card = ({ card, list }) => {
 
   const [ displayDescriptionEditForm, setDisplayDescriptionEditForm ] = useState(false)
   const plusButton = useRef(null)
+  const dateDiv = useRef(null)
 
   const reducer = (prevState, updatedProperty) => ({
     ...prevState,
@@ -32,6 +35,7 @@ const Card = ({ card, list }) => {
   };
 
   const [state, setState] = useReducer(reducer, initState);
+  const [datePopoverState, setDatePopoverState] = useReducer(reducer, initState);
 
   const handleLabelFormClick = (e) => {
     setState({
@@ -43,12 +47,27 @@ const Card = ({ card, list }) => {
     });
   };
 
+  const handleDueDateFormClick = (e) => {
+    setDatePopoverState({
+      popover: {
+        visible: true,
+        attachedTo: dateDiv.current,
+        type: "due-date",
+      },
+    });
+  };
+
   const handleClosePopoverClick = (e) => {
     e.preventDefault();
-    console.log('in the X')
     setState(initState);
   };
 
+  const handleCloseDatePopoverClick = (e) => {
+    e.preventDefault();
+    setDatePopoverState(initState);
+  };
+
+  const [ time, setTime ] = useState('12:00 PM')
 
   return (
     <>
@@ -63,8 +82,17 @@ const Card = ({ card, list }) => {
           <ul className="modal-outer-list">
             <li className="details-section">
               <ul className="modal-details-list">
-                <CardLabels card={card} list={list} onLabelClick={handleLabelFormClick} plusButton={plusButton}/>
-                <CardDueDate />
+                <CardLabels 
+                  card={card} 
+                  list={list} 
+                  onLabelClick={handleLabelFormClick} 
+                  plusButton={plusButton}
+                />
+                <CardDueDate 
+                  card={card} 
+                  onLabelClick={handleDueDateFormClick} 
+                  dateDiv={dateDiv}
+                />
               </ul>
               { displayDescriptionEditForm 
                 ? 
@@ -88,11 +116,22 @@ const Card = ({ card, list }) => {
             <ActivitySection />
           </ul>
         </section>
-        <SidebarButtons onLabelClick={handleLabelFormClick}/>
+        <SidebarButtons 
+          onLabelClick={handleLabelFormClick}
+          onDueDateLabelClick={handleDueDateFormClick} 
+        />
       </div>
     </div>
     <Popover {...state.popover} coverTarget={true}>
       <LabelsPopover onCloseClick={handleClosePopoverClick} card={card}/>
+    </Popover>
+    <Popover {...datePopoverState.popover} coverTarget={true}>
+      <DueDatePopover 
+        onCloseClick={handleCloseDatePopoverClick} 
+        card={card}
+        time={time}
+        setTime={setTime}
+      />
     </Popover>
   </>
   )

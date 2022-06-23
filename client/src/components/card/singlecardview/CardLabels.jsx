@@ -2,13 +2,6 @@ import React from 'react'
 
 const CardLabels = ({ card, onLabelClick, plusButton }) => {
 
-
-  /*
-  <Popover {...state.popover} coverTarget={true}>
-    <NewBoardForm onCloseClick={handleClosePopoverClick} />
-  </Popover>
-  */
-
   return (    
     <li className="labels-section">
       <h3>Labels</h3>

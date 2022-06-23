@@ -1,6 +1,6 @@
 import React from 'react'
 
-const SidebarButtons = ({ onLabelClick }) => {
+const SidebarButtons = ({ onLabelClick, onDueDateLabelClick }) => {
   return (
     <aside className="modal-buttons">
       <h2>Add</h2>
@@ -14,7 +14,7 @@ const SidebarButtons = ({ onLabelClick }) => {
         <li className="checklist-button">
           <i className="checklist-icon sm-icon"></i>Checklist
         </li>
-        <li className="date-button not-implemented">
+        <li className="date-button" onClick={onDueDateLabelClick}>
           <i className="clock-icon sm-icon"></i>Due Date
         </li>
         <li className="attachment-button not-implemented">
