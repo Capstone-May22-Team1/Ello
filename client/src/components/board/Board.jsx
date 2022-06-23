@@ -38,10 +38,10 @@ const Board = () => {
   }, [dispatch, boardId]);
    
   return (
-    <>
+    <div>
       {generateBoardHeader}
       <ExistingList id={boardId}/>
-    </>
+    </div>
   )  
 }
 

@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Route } from "react-router-dom";
+import { ColourContext } from "../lib/ColourContext";
 
 import TopNav from "./shared/TopNav";
 import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
@@ -23,8 +24,10 @@ import UISection from "./ui/UISection";
 
 
 const Application = () => {
+  const { colourBlind } = useContext(ColourContext)  
+
   return (
-    <div>
+    <div className={colourBlind ? "colorblind" : ""}>
       <TopNav />
       <Route path="/" exact component={BoardsDashboardContainer} />
       <Route path="/(boards|cards)/:id" exact component={Board} />

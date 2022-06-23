@@ -18,7 +18,7 @@ const BoardsDashboard = (props) => {
   }, [dispatch]);
 
   return (
-    <main className="dashboard">
+    <main className="dashboard" >
       <section className="board-group">
         <header>
           <div className="board-section-logo">

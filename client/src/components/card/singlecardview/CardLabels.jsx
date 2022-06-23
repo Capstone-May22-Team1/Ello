@@ -1,6 +1,14 @@
 import React from 'react'
 
-const CardLabels = ({ card }) => {
+const CardLabels = ({ card, onLabelClick, plusButton }) => {
+
+
+  /*
+  <Popover {...state.popover} coverTarget={true}>
+    <NewBoardForm onCloseClick={handleClosePopoverClick} />
+  </Popover>
+  */
+
   return (    
     <li className="labels-section">
       <h3>Labels</h3>
@@ -10,7 +18,7 @@ const CardLabels = ({ card }) => {
         </div> 
       ))}
       <div className="member-container">
-        <i className="plus-icon sm-icon"></i>
+        <i className="plus-icon sm-icon" onClick={onLabelClick} ref={plusButton}></i>
       </div>
     </li>
   )

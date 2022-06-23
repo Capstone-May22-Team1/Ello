@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useReducer, useRef } from "react";
 import CardHeader from "./CardHeader";
 import CardLabels from "./CardLabels";
 import CardDueDate from "./CardDueDate";
@@ -10,9 +10,45 @@ import SidebarButtons from './SideBarButtons'
 import { Link } from "react-router-dom";
 import { useState } from "react";
 
+import Popover from "../../shared/Popover";
+import LabelsPopover from "./LabelsPopover";
+
 const Card = ({ card, list }) => {
 
   const [ displayDescriptionEditForm, setDisplayDescriptionEditForm ] = useState(false)
+  const plusButton = useRef(null)
+
+  const reducer = (prevState, updatedProperty) => ({
+    ...prevState,
+    ...updatedProperty,
+  });
+
+  const initState = {
+    popover: {
+      visible: false,
+      attachedTo: null,
+      type: null,
+    },
+  };
+
+  const [state, setState] = useReducer(reducer, initState);
+
+  const handleLabelFormClick = (e) => {
+    setState({
+      popover: {
+        visible: true,
+        attachedTo: plusButton.current,
+        type: "labels",
+      },
+    });
+  };
+
+  const handleClosePopoverClick = (e) => {
+    e.preventDefault();
+    console.log('in the X')
+    setState(initState);
+  };
+
 
   return (
     <>
@@ -27,7 +63,7 @@ const Card = ({ card, list }) => {
           <ul className="modal-outer-list">
             <li className="details-section">
               <ul className="modal-details-list">
-                <CardLabels card={card} list={list}/>
+                <CardLabels card={card} list={list} onLabelClick={handleLabelFormClick} plusButton={plusButton}/>
                 <CardDueDate />
               </ul>
               { displayDescriptionEditForm 
@@ -52,9 +88,12 @@ const Card = ({ card, list }) => {
             <ActivitySection />
           </ul>
         </section>
-        <SidebarButtons />
+        <SidebarButtons onLabelClick={handleLabelFormClick}/>
       </div>
     </div>
+    <Popover {...state.popover} coverTarget={true}>
+      <LabelsPopover onCloseClick={handleClosePopoverClick} card={card}/>
+    </Popover>
   </>
   )
 }
