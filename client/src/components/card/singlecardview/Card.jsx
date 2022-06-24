@@ -13,9 +13,11 @@ import { useState } from "react";
 import Popover from "../../shared/Popover";
 import LabelsPopover from "./LabelsPopover";
 import DueDatePopover from "./DueDatePopover";
+import { useDispatch } from "react-redux";
 
 
 const Card = ({ card, list }) => {
+  const dispatch = useDispatch()
 
   const [ displayDescriptionEditForm, setDisplayDescriptionEditForm ] = useState(false)
   const plusButton = useRef(null)
@@ -63,7 +65,6 @@ const Card = ({ card, list }) => {
   };
 
   const handleCloseDatePopoverClick = (e) => {
-    e.preventDefault();
     setDatePopoverState(initState);
   };
 
@@ -131,6 +132,7 @@ const Card = ({ card, list }) => {
         card={card}
         time={time}
         setTime={setTime}
+        dispatch={dispatch}
       />
     </Popover>
   </>

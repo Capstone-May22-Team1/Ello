@@ -1,32 +1,7 @@
 import React from "react";
 import Pikaday from "pikaday";
 import moment from "moment";
-
-/*
-  this.props.onCloseClick
-  this.props.card
-  this.props.time
-  this.props.setTime
-
-  JavaScript Class - writing a Method
-
-  JavaScript Object
-  {
-    picker: new Pikaday()
-
-    componentDidMount: function() {
-      this.picker
-    }
-
-    handlerOnClick: function() {
-
-    }
-  }
-
-  handlerOnClick() => invoke this global execution context
-
-  bind our this
-*/
+import { updateCard } from "../../../features/boards/cards";
 
 class DueDatePopover extends React.Component {
   componentDidMount() {
@@ -36,6 +11,7 @@ class DueDatePopover extends React.Component {
       container: document.getElementById("calendar-widget"),
       firstDay: 1,
       yearRange: 10,
+      keyboardInput: false,
       defaultDate: moment()
         .add(1, "day")
         .toDate(),
@@ -77,19 +53,47 @@ class DueDatePopover extends React.Component {
   }
 
   handlerOnClick(event) {
-    const date = this.picker.getDate()
-
-    let dateObject = new Date(date)
-    console.log(dateObject)
-    let dateTime = dateObject.setHours(10)
-    console.log(dateTime)
-
-    const time = this.props.time
-
-  
-    console.log(this.props.time)
     event.preventDefault()
+    const dispatch = this.props.dispatch
 
+    let dueDate = this.getSelectedDate()
+    
+    let cardId = this.props.card._id
+    let updatedCard = {
+      card: {
+        dueDate
+      }
+    }
+
+    dispatch(updateCard({ cardId, updatedCard, callback: this.props.onCloseClick }))
+  }
+
+  getSelectedDate() {
+    const date = this.picker.getDate()
+    const dateString = date.toString()
+
+    const time = this.checkTimeFormat(this.props.time)
+
+    const dateStringArray = dateString.split(' ').slice(0, 4)
+    dateStringArray.push(time)
+
+    const fullDateString = dateStringArray.join(' ')
+    const fullDateObject = new Date(fullDateString)
+
+    return fullDateObject
+
+  }
+
+
+  checkTimeFormat(time) {
+    if (time.slice(-3)[0] === ' ') {
+      return time
+    } else {
+      let AMPM = time.slice(-2)
+      let numbers = time.slice(0, -2)
+      let correctTime = `${numbers} ${AMPM}`
+      return correctTime
+    }
   }
 
   render() {
