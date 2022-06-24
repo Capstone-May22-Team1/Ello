@@ -19,8 +19,7 @@ const Comment = ({ comment }) => {
         </small>
         <div className="comment">
           <label>
-            <textarea required="" rows="1">
-              {comment.text}
+            <textarea required="" rows="1" defaultValue={comment.text}>
             </textarea>
             <div>
               <a className="light-button card-icon sm-icon"></a>

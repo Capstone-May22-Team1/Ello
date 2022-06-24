@@ -4,10 +4,9 @@ import { updateList } from "../../features/boards/lists"
 import CardContainer from "../card/CardContainer"
 import AddCard from "../card/AddCard"
 
-const ListTile = ({ list, listId, boardId }) => {
+const ListTile = ({ list, listId, boardId, activeList, setActiveList, dragulaDecorator }) => {
   const dispatch = useDispatch()
   const cards = useSelector((state => state.cards)).filter(card => card.listId === list._id)
-  const [ displayAddCardForm, setDisplayAddCardForm ] = useState(false)
 
   const [ displayEditListInput, setDisplayEditListInput ] = useState(false)
   const [ editListInput, setEditListInput ] = useState(list.title)
@@ -35,7 +34,7 @@ const ListTile = ({ list, listId, boardId }) => {
   }
 
   return (
-    <div className={`list-wrapper ${displayAddCardForm ? 'add-dropdown-active' : ''}`}>
+    <div className={`list-wrapper ${activeList === listId ? 'add-dropdown-active' : ''}`}>
       <div className="list-background">
         <div className="list">
           <a className="more-icon sm-icon" href=""></a>
@@ -71,8 +70,8 @@ const ListTile = ({ list, listId, boardId }) => {
           <AddCard 
             listId={listId}
             boardId={boardId}
-            displayAddCardForm={displayAddCardForm}
-            setDisplayAddCardForm={setDisplayAddCardForm}
+            setActiveList={setActiveList}
+            activeList={activeList}
           />
         </div>
       </div>

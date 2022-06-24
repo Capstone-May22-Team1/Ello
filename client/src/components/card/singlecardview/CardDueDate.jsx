@@ -1,6 +1,23 @@
 import React from 'react'
+import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { updateCard } from '../../../features/boards/cards'
 
 const CardDueDate = ({ card, onLabelClick, dateDiv }) => {
+  const dispatch = useDispatch()
+  const [ completed, setCompleted ] = useState(!!card.completed)
+
+  const handleCheckboxClicked = (e) => {
+    e.stopPropagation()
+    const updatedCard = {
+      card: {
+        completed: !completed,
+      }
+    }
+
+    dispatch(updateCard({ cardId: card._id, updatedCard }))
+  }
+
   const dateToString = (inputdate) => {
     let date = new Date(inputdate)
     let month = date.toLocaleString('en-us', { month: 'short' });
@@ -22,7 +39,9 @@ const CardDueDate = ({ card, onLabelClick, dateDiv }) => {
             id="dueDateCheckbox"
             type="checkbox"
             className="checkbox"
-            checked=""
+            checked={completed}
+            onChange={() => setCompleted(!completed)}
+            onClick={handleCheckboxClicked}
           />
           {`${dateToString(card.dueDate)} at ${timeToString(card.dueDate)}`} <span >(past due)</span> 
         </div>
