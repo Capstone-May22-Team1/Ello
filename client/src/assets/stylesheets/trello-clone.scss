@@ -1235,6 +1235,9 @@ main {
 .list-wrapper {
   display: inline-block;
 }
+.drag-wrapper {
+  display: inline-block;
+}
 .list-wrapper + .list-wrapper {
   margin-left: 6px;
 }

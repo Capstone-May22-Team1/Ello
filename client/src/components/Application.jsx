@@ -5,12 +5,9 @@ import { ColourContext } from "../lib/ColourContext";
 import TopNav from "./shared/TopNav";
 import BoardsDashboardContainer from "./dashboard/BoardsDashboardContainer";
 import Board from "./board/Board";
-
-// import Card from "./card/singleCardView/Card";
 import CardView from "./card/singlecardview/CardView";
 
 import AllBoards from "./ui/AllBoards";
-
 import Card from "./ui/Card";
 import CardArchived from "./ui/CardArchived";
 import CardEditingDescription from "./ui/CardEditingDescription";
@@ -52,4 +49,3 @@ const Application = () => {
 };
 
 export default Application;
-// <Route path="/(boards|cards)/:id" exact component={Board} />

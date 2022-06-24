@@ -39,6 +39,14 @@ const apiClient = {
       logError(e)
     }
   },
+  updateBoard: async (boardId, updatedBoard) => {
+    try {
+      const { data } = await axios.put(`${routes.EDIT_BOARD_URL}/${boardId}`, updatedBoard)
+      return data
+    } catch (e) {
+      logError(e)
+    }
+  },
   createList: async (newList) => {
     try {
       const { data } = await axios.post(routes.CREATE_LIST_URL, newList)

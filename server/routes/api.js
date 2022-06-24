@@ -10,6 +10,7 @@ const { validateBoard, validateList, validateCard, validateEditCard, validateCom
 
 router.get('/boards',boardsController.getBoards );
 router.get('/boards/:id', boardsController.getBoard);
+router.put('/boards/:id', boardsController.updateBoard);
 router.post('/boards', validateBoard, boardsController.createBoard );
 
 router.post('/lists', validateList, listsController.createList );

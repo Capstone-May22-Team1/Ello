@@ -1,26 +1,14 @@
 import React, { useState } from "react"
 import Dragula from 'react-dragula';
-import { useSelector } from "react-redux"
+import { useSelector, useDispatch } from "react-redux"
 import ListTile from "./ListTile"
 import AddList from "./AddList"
-
-/*
-  active => listId
-
-  [{ list1 }, { list2 }, { list3 }]
-
-  within the List Tile Component  
-    if the listId matches activeList
-  
-
-  onClick => the activeList changes from one list to another list
-
-*/
-
+import { updateBoard } from "../../features/boards/boards"
 
 const ExistingList = ({ id }) => {
   const lists = useSelector((state => state.lists)).filter(list => list.boardId === id)
   const [ activeList, setActiveList ] = useState('')
+  const dispatch = useDispatch()
 
   let containers = []
 
@@ -32,26 +20,36 @@ const ExistingList = ({ id }) => {
     }
   };
 
-  console.log(drake)
+  drake.on('drop', () => {
+    let allLists = [...document.querySelectorAll('#cards-container')]
 
-  drake.on('drop', (el, source) => {
-    // console.log(el)
-    // console.log(source)
-    // console.log('drop event triggered')
+    let correctListIds = allLists.slice(0, -1).map(list => {
+      let dataId = list.getAttribute('data-id')
+      let listId = dataId.split('-')[1]
+      
+      return listId
+    })
 
+    const updatedBoard = {
+      board: {
+        lists: correctListIds
+      }
+    }
+
+    dispatch(updateBoard({ boardId: id, updatedBoard}))
   })
 
   return (
     <main>
       <div id="list-container" className="list-container">
         <div id="existing-lists" className="existing-lists" >
-          <div className="container" ref={dragulaDecorator}>
+          <div className="container">
             {lists.map(list => (
-              // <div 
-              //   key={`div${list._id}`} 
-              //   className='list-wrapper' 
-                
-              // >
+              <div 
+                key={`div${list._id}`} 
+                className='list-wrapper' 
+                ref={dragulaDecorator}
+              >
                 <ListTile 
                   key={list._id} 
                   list={list} 
@@ -60,7 +58,7 @@ const ExistingList = ({ id }) => {
                   activeList={activeList}
                   setActiveList={setActiveList}
                 />
-              // </div>
+              </div>
             ))}
           </div>
         </div>

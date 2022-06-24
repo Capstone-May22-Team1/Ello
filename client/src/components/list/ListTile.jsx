@@ -4,7 +4,7 @@ import { updateList } from "../../features/boards/lists"
 import CardContainer from "../card/CardContainer"
 import AddCard from "../card/AddCard"
 
-const ListTile = ({ list, listId, boardId, activeList, setActiveList, dragulaDecorator }) => {
+const ListTile = ({ list, listId, boardId, activeList, setActiveList }) => {
   const dispatch = useDispatch()
   const cards = useSelector((state => state.cards)).filter(card => card.listId === list._id)
 

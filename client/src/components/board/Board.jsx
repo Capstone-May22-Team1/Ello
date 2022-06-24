@@ -7,7 +7,6 @@ import BoardHeader from './BoardHeader'
 
 const Board = () => {
   const dispatch = useDispatch();
-
   const path = useParams()[0];
   let { id } = useParams()
   let boardId

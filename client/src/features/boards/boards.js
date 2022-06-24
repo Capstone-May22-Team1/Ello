@@ -19,6 +19,17 @@ export const fetchBoard = createAsyncThunk(
   }
 )
 
+export const updateBoard = createAsyncThunk(
+  "boards/updateBoard",
+  async({ boardId, updatedBoard, callback }) => {
+    const data = await apiClient.updateBoard(boardId, updatedBoard);
+    if (callback) {
+      callback;
+    }
+    return data
+  }
+)
+
 export const createBoard = createAsyncThunk(
   "boards/createBoard",
   async (newBoard, callback) => {
@@ -56,6 +67,9 @@ const boardSlice = createSlice({
           return board._id === action.payload._id ? boardWithoutLists : board
         })
       }
+    }),
+    builder.addCase(updateBoard.fulfilled, (state, action) => {
+      state.map(board => board._id === action.payload._id ? action.payload : board);
     })
   },
 });

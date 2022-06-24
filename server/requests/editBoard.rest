@@ -1,0 +1,8 @@
+PUT http://localhost:5001/api/boards/62a8ccc07fa2f8e51b28dac0 HTTP/1.1
+content-type: application/json
+
+{
+  "board": {
+    "title": "The Wonderful Board Update!"
+  }
+}

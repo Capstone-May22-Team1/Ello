@@ -46,6 +46,27 @@ const getBoard = (req, res, next) => {
     })
 }
 
+const updateBoard = (req, res, next) => {
+  const errors = validationResult(req)
+
+  if (errors.isEmpty()) {
+    const updatedBoard = req.body.board
+    const boardId = req.params.id
+
+    Board.findByIdAndUpdate(boardId, updatedBoard, { new: true })
+      .then((returnedBoard) => {
+        res.json(returnedBoard)
+      })
+      .catch((err) => {
+        console.log(err)
+        return next(new HttpError("Updating board failed, please try again", 500))
+      })
+    } else {
+      return next(new HttpError("The input field is empty.", 404));
+    }
+}
+
 exports.getBoard = getBoard;
 exports.getBoards = getBoards;
 exports.createBoard = createBoard;
+exports.updateBoard = updateBoard;
